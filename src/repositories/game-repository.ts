@@ -35,10 +35,17 @@ function createGame(name_game: string,review: number, genre_id: number): Promise
     );
   }
 
+  function deleteGame(id: number): Promise<QueryResult> {
+    return connection.query(
+      `DELETE FROM games WHERE id = $1;`,[id]
+    );
+  }
+
   export const gamesRepository = {
     createGame,
     getGames,
     getGameName,
     getGameId,
-    updateReview
+    updateReview, 
+    deleteGame
   };

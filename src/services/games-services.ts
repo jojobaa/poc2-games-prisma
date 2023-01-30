@@ -44,9 +44,17 @@ async function gameValidate(name_game: string) {
   
     return gamesRepository.updateReview(review, id);
   }
+
+  async function deleteGame(id: number) {
+    await gameIdValidade(id);
+  
+    return gamesRepository.deleteGame(id);
+  }
+  
   
 
   export const gameService = {
     createGame,
-    updateReview
+    updateReview,
+    deleteGame
   };

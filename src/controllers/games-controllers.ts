@@ -10,9 +10,7 @@ export async function createGame(req: Request, res: Response) {
       await gameService.createGame(name_game,review, genre_id);
       return res.sendStatus(201);
     } catch (err) {
-      if (err.name === "DuplicatedGameName") return res.status(400).send(err.message);
-      if (err.name === "GenreNotFound") return res.status(404).send(err.message);
-      return res.status(500).send(err.message);
+      return res.sendStatus(500)
     }
   }
 
@@ -23,7 +21,7 @@ export async function createGame(req: Request, res: Response) {
       const games = await gamesRepository.getGames(genre);
       return res.status(200).send(games.rows);
     } catch (err) {
-      return res.status(500).send(err.message);
+      return res.sendStatus(500)
     }
   }
 
@@ -35,9 +33,17 @@ export async function createGame(req: Request, res: Response) {
       await gameService.updateReview(review, Number(id));
       return res.sendStatus(201);
     } catch (err) {
-      if (err.name === "GameNotFound") return res.status(404).send(err.message);
-      if (err.message === 'invalid input syntax for type integer: "NaN"')
-        return res.status(400).send("Param id must be an integer number");
-      return res.status(500).send(err.message);
+      return res.sendStatus(500)
+    }
+  }
+
+  export async function deleteGame(req: Request, res: Response) {
+    const { id } = req.params as GameId;
+  
+    try {
+      await gameService.deleteGame(Number(id));
+      return res.sendStatus(200);
+    } catch (err) {
+      return res.sendStatus(500)
     }
   }
