@@ -1,0 +1,22 @@
+CREATE TABLE games (
+    id integer NOT NULL,
+    name text NOT NULL,
+    genre_id integer NOT NULL,
+    created_at timestamp default(now())
+);
+
+CREATE TABLE genre (
+    id serial NOT NULL,
+    genre text NOT NULL,
+    created_at timestamp default(now())
+);
+
+CREATE TABLE reviews (
+    id serial NOT NULL,
+    name text NOT NULL,
+    game_id integer NOT NULL,
+    created_at timestamp default(now())
+);
+
+
+
