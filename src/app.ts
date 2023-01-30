@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import routerGenre from "./routes/genre-routes.js";
-import routerUser from "./routes/users-routes.js";
 import routerGames from "./routes/games-routes.js";
 
 dotenv.config();
@@ -13,7 +12,6 @@ server.use(express.json());
 
 server.use(routerGames);
 server.use(routerGenre);
-server.use(routerUser);
 server.get("/health", (req, res) => {
     res.send("ok!")
 })

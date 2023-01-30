@@ -1,6 +1,7 @@
 CREATE TABLE games (
     id serial NOT NULL,
     name_game text NOT NULL,
+    review integer NOT NULL,
     genre_id integer NOT NULL,
     created_at timestamp default(now())
 );

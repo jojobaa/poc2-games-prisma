@@ -5,18 +5,12 @@ export type Genre = {
 
 export type Genres = Omit<Genre, "id">;
 
-export type User = {
-  id: number;
-  name: string;
-};
-
-export type Users = Omit<User, "id">;
-export type UserId = Omit<User, "name">;
-
 export type Game = {
   id: number;
   name_game: string;
+  review: number;
   genre_id: number;
+  genre?: string;
 };
 
 export type Games = Omit<Game, "id">;
@@ -24,9 +18,14 @@ export type Games = Omit<Game, "id">;
 export type GameJoin = {
   id: number;
   name_game: string;
+  review: number;
   genre: string;
 };
 
-export type GameGenre = {
-  genre: string;
+export type GameGenres = Omit<Game, "id" | "title" | "playtime" | "genre_id">;
+
+export type GameId = {
+  id: string;
 };
+
+export type GamePlaytime = Omit<Game, "id" | "title" | "genre_id" | "genre">;

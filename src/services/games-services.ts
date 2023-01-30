@@ -1,3 +1,4 @@
+import { number } from "joi";
 import { gamesRepository } from "../repositories/game-repository.js";
 import { repositoryGenre } from "../repositories/genre-repository.js";
 
@@ -21,13 +22,31 @@ async function gameValidate(name_game: string) {
     }
   }
 
-  async function createGame(name_game: string, genre_id: number) {
+  async function createGame(name_game: string, review:number, genre_id: number) {
     await gameValidate(name_game);
     await genreId(genre_id);
   
-    return gamesRepository.createGame(name_game, genre_id);
+    return gamesRepository.createGame(name_game, review, genre_id);
+  }
+
+  async function gameIdValidade(id: number) {
+    const game = await gamesRepository.getGameId(id);
+    if (game.rows.length === 0) {
+      throw {
+        name: "GameNotFound",
+        message: "Could not find a game with this id!",
+      };
+    }
   }
   
+  async function updateReview(review: number, id: number) {
+    await gameIdValidade(id);
+  
+    return gamesRepository.updateReview(review, id);
+  }
+  
+
   export const gameService = {
     createGame,
+    updateReview
   };
