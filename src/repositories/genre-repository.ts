@@ -4,7 +4,7 @@ import { Genre } from "../protocols/protocols.js";
 
 function createGenre(genre: string): Promise<QueryResult> {
     return connection.query(
-        `INSERT INTO genre (genre) VALUES ($1);`, [genre]
+        `INSERT INTO genre (name) VALUES ($1);`, [genre]
     );
 }
 

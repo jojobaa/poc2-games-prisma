@@ -9,7 +9,8 @@ export async function createGenre(req: Request, res: Response) {
       await repositoryGenre.createGenre(genre);
       return res.sendStatus(201);
     } catch (err) {
-      return res.status(500).send(err.message);
+      console.log(err)
+      return res.sendStatus(500);
     }
   }
 
