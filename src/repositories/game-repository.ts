@@ -1,51 +1,95 @@
-import { QueryResult } from "pg";
-import { connection } from "../database/db.js";
-import { Game} from "../protocols/protocols.js";
+import prisma from "../database/db.js";
 
-function createGame(name_game: string,review: number, genre_id: number): Promise<QueryResult> {
-    return connection.query(
-      `INSERT INTO games(name_game, review, genre_id) VALUES ($1, $2, $3);`,[name_game,review, genre_id]
-    );
-  }
+function createGame(name_game: string, review: number, genre_id: number) {
+  return prisma.games.create({
+    data: {
+      name_game: name_game,
+      review: review,
+      genre_id: genre_id,
+    },
+  });
+}
 
-  function getGames(genre: string): Promise<QueryResult<Game>> {
-    return connection.query(
-      `SELECT ga.id, ga.name_game, ga.review, ge.genre FROM games ga JOIN genre ge ON ga.genre_id = ge.id
-      ${genre ? `WHERE ge.genre ILIKE $1` : ``};
-      `,
-      genre ? [genre] : []
-    );
-  }
+function getGames() {
+  return prisma.games.findMany({
+    select: {
+      id: true,
+      name_game: true,
+      review: true,
+      genre: {
+        select: {
+          genre: true,
+        },
+      },
+    },
+  });
+}
 
-  function getGameName(name_game: string): Promise<QueryResult<Game>> {
-    return connection.query(
-      `SELECT id, name_game, review, genre_id FROM games WHERE name_game = $1;`,[name_game]
-    );
-  }
+function getGameGenre(genre: string) {
+  return prisma.games.findMany({
+    select: {
+      id: true,
+      name_game: true,
+      review: true,
+      genre: {
+        select: {
+          genre: true,
+        },
+      },
+    },
+    where: {
+      genre: {
+        genre: {
+          startsWith: genre,
+          mode: "insensitive",
+        },
+      },
+    },
+  });
+}
 
-  function getGameId(id: number): Promise<QueryResult<Game>> {
-    return connection.query(
-      `SELECT id, name_game, review, genre_id FROM games WHERE id = $1;`,[id]
-    );
-  }
 
-  function updateReview(review: number, id: number): Promise<QueryResult> {
-    return connection.query(
-      `UPDATE games SET review = $1 WHERE id = $2;`,[review, id]
-    );
-  }
+function getGameName(name_game: string) {
+  return prisma.games.findUnique({
+    where: {
+      name_game: name_game,
+    },
+  });
+}
 
-  function deleteGame(id: number): Promise<QueryResult> {
-    return connection.query(
-      `DELETE FROM games WHERE id = $1;`,[id]
-    );
-  }
+function getGameId(id: number) {
+  return prisma.games.findUnique({
+    where: {
+      id: id,
+    },
+  });
+}
 
-  export const gamesRepository = {
-    createGame,
-    getGames,
-    getGameName,
-    getGameId,
-    updateReview, 
-    deleteGame
-  };
+function updateReview(review: number, id: number) {
+  return prisma.games.update({
+    where: {
+      id: id,
+    },
+    data: {
+      review: review,
+    },
+  });
+}
+
+function deleteGame(id: number) {
+  return prisma.games.delete({
+    where: {
+      id: id,
+    },
+  });
+}
+
+export const gamesRepository = {
+  createGame,
+  getGames,
+  getGameGenre,
+  getGameName,
+  getGameId,
+  updateReview,
+  deleteGame
+};

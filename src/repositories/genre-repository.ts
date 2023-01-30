@@ -1,29 +1,44 @@
-import { QueryResult } from "pg";
-import { connection } from "../database/db.js";
-import { Genre } from "../protocols/protocols.js";
+import prisma from "../database/db.js";
 
-function createGenre(genre: string): Promise<QueryResult> {
-    return connection.query(
-        `INSERT INTO genre(genre) VALUES ($1);`, [genre]
-    );
+function createGenre(genre: string) {
+  return prisma.genre.create({
+    data: {
+      genre: genre,
+    },
+  });
 }
 
-function getGenres(): Promise<QueryResult<Genre>> {
-    return connection.query(
-        `SELECT id, genre FROM genre;`
-    );
+function getGenres() {
+  return prisma.genre.findMany({
+    select: {
+      id: true,
+      genre: true,
+    },
+  });
 }
 
-function getGenreName(genre: string): Promise<QueryResult<Genre>> {
-    return connection.query(
-      `SELECT id, genre FROM genre WHERE genre = $1;`,[genre]
-    );
+  function getGenreName(genre: string) {
+    return prisma.genre.findMany({
+      where: {
+        genre: genre,
+      },
+      select: {
+        id: true,
+        genre: true,
+      },
+    });
   }
 
-  function getGenreId(id: number): Promise<QueryResult<Genre>> {
-    return connection.query(
-      `SELECT id, genre FROM genre WHERE id = $1;`,[id]
-    );
+  function getGenreId(id: number) {
+    return prisma.genre.findUnique({
+      where: {
+        id: id,
+      },
+      select: {
+        id: true,
+        genre: true,
+      },
+    });
   }
 
 export const repositoryGenre = {

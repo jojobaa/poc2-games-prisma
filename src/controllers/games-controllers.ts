@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
-import { Games, GameGenre, GameReview, GameId } from "../protocols/protocols.js";
-import { gamesRepository } from "../repositories/game-repository.js";
+import { Game, GameReview, GamePost, GameId, Genre } from "../protocols/protocols.js";
 import { gameService } from "../services/games-services.js";
 
 export async function createGame(req: Request, res: Response) {
-    const { name_game, review, genre_id } = req.body as Games;
+    const { name_game, review, genre_id } = req.body as GamePost;
   
     try {
       await gameService.createGame(name_game,review, genre_id);
@@ -15,11 +14,16 @@ export async function createGame(req: Request, res: Response) {
   }
 
   export async function getGames(req: Request, res: Response) {
-    const { genre } = req.query as GameGenre;
+    const { genre } = req.query as Genre;
   
     try {
-      const games = await gamesRepository.getGames(genre);
-      return res.status(200).send(games.rows);
+      let games: Game[];
+      if (genre) {
+        games = await gameService.getGamesGenre(genre);
+      }else {
+        games = await gameService.getGames();
+      }
+      return res.status(200).send(games);
     } catch (err) {
       return res.sendStatus(500)
     }
