@@ -20,8 +20,15 @@ function getGenreName(genre: string): Promise<QueryResult<Genre>> {
     );
   }
 
+  function getGenreId(id: number): Promise<QueryResult<Genre>> {
+    return connection.query(
+      `SELECT id, genre FROM genre WHERE id = $1;`,[id]
+    );
+  }
+
 export const repositoryGenre = {
     createGenre,
     getGenres,
-    getGenreName
+    getGenreName,
+    getGenreId
 };

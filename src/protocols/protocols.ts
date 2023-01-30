@@ -26,3 +26,7 @@ export type GameJoin = {
   name_game: string;
   genre: string;
 };
+
+export type GameGenre = {
+  genre: string;
+};

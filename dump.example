@@ -1,5 +1,5 @@
 CREATE TABLE games (
-    id integer NOT NULL,
+    id serial NOT NULL,
     name_game text NOT NULL,
     genre_id integer NOT NULL,
     created_at timestamp default(now())
