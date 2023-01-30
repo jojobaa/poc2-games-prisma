@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
 import { User } from "../protocols/protocols.js";
 import { usersRepository } from "../repositories/user-repository.js";
+import { usersService } from "../services/users-services.js";
 
 export async function createUser(req: Request, res: Response) {
     const { name } = req.body as User;
   
     try {
-      const insertReturn = await usersRepository.createUser(name);
+      const insertReturn = await usersService.createUsers(name);
       return res.status(201).send(`Your user id is: ${insertReturn.rows[0].id}`);
     } catch (err) {
       return res.status(500).send(err.message);
