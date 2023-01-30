@@ -4,13 +4,13 @@ import { User, UserId } from "../protocols/protocols.js";
 
 function createUser(name: string): Promise<QueryResult<UserId>> {
     return connection.query(
-      `INSERT INTO reviewers(name) VALUES ($1) RETURNING id;`, [name]
+      `INSERT INTO users(name) VALUES ($1) RETURNING id;`, [name]
     );
   }
 
   function getUsers(): Promise<QueryResult<User>> {
     return connection.query(
-      `SELECT id, name FROM reviewers;`
+      `SELECT id, name FROM users;`
     );
   }
 
