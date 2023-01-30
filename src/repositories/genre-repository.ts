@@ -4,19 +4,19 @@ import { Genre } from "../protocols/protocols.js";
 
 function createGenre(genre: string): Promise<QueryResult> {
     return connection.query(
-        `INSERT INTO genre(name) VALUES ($1);`, [genre]
+        `INSERT INTO genre(genre) VALUES ($1);`, [genre]
     );
 }
 
 function getGenres(): Promise<QueryResult<Genre>> {
     return connection.query(
-        `SELECT id, name FROM genre;`
+        `SELECT id, genre FROM genre;`
     );
 }
 
 function getGenreName(genre: string): Promise<QueryResult<Genre>> {
     return connection.query(
-      `SELECT id, name FROM genre WHERE genre = $1;`,[genre]
+      `SELECT id, genre FROM genre WHERE genre = $1;`,[genre]
     );
   }
 

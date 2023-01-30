@@ -10,10 +10,10 @@ async function validateUniqueGenre(name: string) {
   }
 }
 
-async function createGenre(name: string) {
-  await validateUniqueGenre(name);
+async function createGenre(genre: string) {
+  await validateUniqueGenre(genre);
 
-  return repositoryGenre.createGenre(name);
+  return repositoryGenre.createGenre(genre);
 }
 
 export const genresService = {

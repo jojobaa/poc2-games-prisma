@@ -12,3 +12,17 @@ export type User = {
 
 export type Users = Omit<User, "id">;
 export type UserId = Omit<User, "name">;
+
+export type Game = {
+  id: number;
+  name_game: string;
+  genre_id: number;
+};
+
+export type Games = Omit<Game, "id">;
+
+export type GameJoin = {
+  id: number;
+  name_game: string;
+  genre: string;
+};

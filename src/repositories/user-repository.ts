@@ -16,7 +16,7 @@ function createUser(name: string): Promise<QueryResult<UserId>> {
 
   function getUserName(name: string): Promise<QueryResult<User>> {
     return connection.query(
-      `SELECT id, name FROM reviewers WHERE name = $1;`,[name]
+      `SELECT id, name FROM users WHERE name = $1;`,[name]
     );
   }
 
