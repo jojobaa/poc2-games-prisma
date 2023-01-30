@@ -1,10 +1,10 @@
 import { QueryResult } from "pg";
 import { connection } from "../database/db.js";
-import { Genre } from "../protocols/genre-protocols.js";
+import { Genre } from "../protocols/protocols.js";
 
 function createGenre(genre: string): Promise<QueryResult> {
     return connection.query(
-        `INSERT INTO genre(genre) VALUES ($1);`, [genre]
+        `INSERT INTO genre (genre) VALUES ($1);`, [genre]
     );
 }
 

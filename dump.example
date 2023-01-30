@@ -11,6 +11,12 @@ CREATE TABLE genre (
     created_at timestamp default(now())
 );
 
+CREATE TABLE users (
+    id serial NOT NULL,
+    name text NOT NULL,
+    created_at timestamp default(now())
+);
+
 CREATE TABLE reviews (
     id serial NOT NULL,
     name text NOT NULL,

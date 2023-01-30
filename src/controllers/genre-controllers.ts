@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Genre } from "../protocols/genre-protocols.js";
+import { Genre } from "../protocols/protocols.js";
 import { repositoryGenre } from "../repositories/genre-repository.js";
 
 export async function createGenre(req: Request, res: Response) {
