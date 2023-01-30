@@ -22,10 +22,10 @@ export type GameJoin = {
   genre: string;
 };
 
-export type GameGenres = Omit<Game, "id" | "title" | "playtime" | "genre_id">;
+export type GameGenre = Omit<Game, "id" | "name_game" | "review" | "genre_id">;
 
 export type GameId = {
   id: string;
 };
 
-export type GamePlaytime = Omit<Game, "id" | "title" | "genre_id" | "genre">;
+export type GameReview = Omit<Game, "id" | "name_game" | "genre_id" | "genre">;
